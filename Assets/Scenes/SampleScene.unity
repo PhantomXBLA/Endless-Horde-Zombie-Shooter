@@ -478,7 +478,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponToSpawn: {fileID: 5587314598721099594, guid: bf6bfae7dab663546ae58c4ff7b0e149, type: 3}
+  playerController: {fileID: 0}
   WeaponSocket: {fileID: 1742507665}
+  GripSocket: {fileID: 0}
 --- !u!1 &120420994
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +817,7 @@ GameObject:
   - component: {fileID: 1470217380}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1037,7 +1039,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh18368
+  m_Name: pb_Mesh18372
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1536,6 +1538,10 @@ PrefabInstance:
       propertyPath: FollowTarget
       value: 
       objectReference: {fileID: 1283381775}
+    - target: {fileID: 3772989516783492553, guid: d720b00dd9ffcbc46a38d4f0f5d485c9, type: 3}
+      propertyPath: aimSensitivity
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5355961640743680959, guid: d720b00dd9ffcbc46a38d4f0f5d485c9, type: 3}
       propertyPath: m_Enabled
       value: 1

@@ -18,7 +18,7 @@ public class MovementComponent : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     Vector2 lookInput = Vector2.zero;
 
-    public float aimSensitivity = 0.2f;
+    public float aimSensitivity = 0.05f;
 
     Rigidbody rigidbody;
     Animator playerAnimator;
@@ -27,7 +27,7 @@ public class MovementComponent : MonoBehaviour
     public readonly int movementYHash = Animator.StringToHash("MovementY");
     public readonly int isJumpingHash = Animator.StringToHash("IsJumping");
     public readonly int isRunningHash = Animator.StringToHash("IsRunning");
-    public readonly int isFiringHash = Animator.StringToHash("IsFiring");
+
 
     public GameObject FollowTarget;
 
@@ -54,14 +54,14 @@ public class MovementComponent : MonoBehaviour
 
         var angle = FollowTarget.transform.localEulerAngles.x;
 
-        if (angle > 180 && angle < 340)
+        if (angle > 180 && angle < 300)
         {
-            angles.x = 340;
+            angles.x = 300;
         }
 
-        else if (angle < 180 && angle > 40)
+        else if (angle < 180 && angle > 70)
         {
-            angles.x = 40;
+            angles.x = 70;
         }
 
         FollowTarget.transform.localEulerAngles = angles;
@@ -109,17 +109,7 @@ public class MovementComponent : MonoBehaviour
         lookInput = value.Get<Vector2>();
     }
 
-    public void OnFire(InputValue value)
-    {
-        playerController.isFiring = value.isPressed;
 
-        playerAnimator.SetBool(isFiringHash, playerController.isFiring);
-    }
-
-    public void OnReload(InputValue value)
-    {
-
-    }
 
     public void OnRun(InputValue value)
     {

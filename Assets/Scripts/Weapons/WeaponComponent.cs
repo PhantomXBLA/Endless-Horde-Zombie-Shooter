@@ -18,6 +18,7 @@ public struct WeaponStats
     public float damage;
     public int bulletsInMag;
     public int magSize;
+    public int reserveAmmo;
     public float fireRate;
     public float fireStartDelay;
     public float fireDistance;
@@ -28,7 +29,12 @@ public struct WeaponStats
 public class WeaponComponent : MonoBehaviour
 {
     public Transform gripLocation;
+    public Transform muzzleLocation;
+
     protected WeaponHolder weaponHolder;
+
+    [SerializeField] 
+    protected ParticleSystem firingEffect;
 
     [SerializeField] 
     public WeaponStats weaponStats;
@@ -42,7 +48,7 @@ public class WeaponComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //firingEffect.transform.parent = muzzleLocation;
     }
 
     private void Awake()
@@ -78,11 +84,54 @@ public class WeaponComponent : MonoBehaviour
     {
         isFiring = false;
         CancelInvoke(nameof(Fire));
+
+        if (firingEffect.isPlaying)
+        {
+            firingEffect.Stop();
+        }
     }
 
     protected virtual void Fire()
     {
         print("Fire Weapon!");
         weaponStats.bulletsInMag--;
+    }
+
+    public virtual void StartReloading()
+    {
+
+        isReloading = true;
+        ReloadWeapon();
+    }
+
+    public virtual void StopReloading()
+    {
+        isReloading = false;
+
+    }
+
+    protected virtual void ReloadWeapon()
+    {
+
+
+        if (firingEffect.isPlaying)
+        {
+            firingEffect.Stop();
+        }
+
+
+        int bulletsToReload = weaponStats.magSize - weaponStats.reserveAmmo;
+
+        if (bulletsToReload < 0)
+        {
+            weaponStats.bulletsInMag = weaponStats.magSize;
+            weaponStats.reserveAmmo -= weaponStats.magSize;
+
+        }
+        else
+        {
+            weaponStats.bulletsInMag = weaponStats.reserveAmmo;
+            weaponStats.reserveAmmo = 0;
+        }
     }
 }

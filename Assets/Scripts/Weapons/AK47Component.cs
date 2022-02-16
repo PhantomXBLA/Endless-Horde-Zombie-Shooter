@@ -24,6 +24,12 @@ public class AK47Component : WeaponComponent
         if(weaponStats.bulletsInMag > 0 && !isReloading && !weaponHolder.playerController.isRunning)
         {
             base.Fire();
+
+            if (firingEffect)
+            {
+                firingEffect.Play();
+            }
+
             Ray screenRay = mainCamera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0));
 
             if (Physics.Raycast(screenRay, out RaycastHit hit, weaponStats.fireDistance, weaponStats.weaponHitLayers))
@@ -36,6 +42,8 @@ public class AK47Component : WeaponComponent
 
                 print("Hit Something");
             }
+
+            print("Bullet count: " + weaponStats.bulletsInMag);
 
         }
         

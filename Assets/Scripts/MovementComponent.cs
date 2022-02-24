@@ -12,6 +12,9 @@ public class MovementComponent : MonoBehaviour
     [SerializeField]
     float jumpForce = 5;
 
+    public float maxFlightTime = 8;
+    public float flightTime;
+
     private PlayerController playerController;
 
     Vector2 inputVector = Vector2.zero;
@@ -36,6 +39,7 @@ public class MovementComponent : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         rigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
+        flightTime = maxFlightTime;
     }
     // Start is called before the first frame update
     void Start()
@@ -71,7 +75,7 @@ public class MovementComponent : MonoBehaviour
         FollowTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
 
 
-        if (playerController.isJumping) return;
+       // if (playerController.isJumping) return;
 
         if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
 
@@ -80,6 +84,11 @@ public class MovementComponent : MonoBehaviour
         Vector3 movementDirection = moveDirection * (currentSpeed * Time.deltaTime);
 
         transform.position += movementDirection;
+
+        if(flightTime <= 0 && playerController.isJumping == true)
+        {
+            rigidbody.useGravity = true;
+        }
 
 
     }
@@ -93,10 +102,42 @@ public class MovementComponent : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        playerController.isJumping = value.isPressed;
-        rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
+        playerController.isJumping = true;
+        //rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
+        rigidbody.useGravity = false;
+
+        if (value.isPressed && flightTime > 0)
+        {
+            InvokeRepeating(nameof(FlyUP), 0.1f, 0.01f);
+            InvokeRepeating(nameof(decreaseFlightTimer), 0.25f, 1);
+        }
+        else
+        {
+            CancelInvoke(nameof(FlyUP));
+        }
+
+
+        
         playerAnimator.SetBool(isJumpingHash, playerController.isJumping);
 
+    }
+
+    void FlyUP()
+    {
+        this.gameObject.transform.position += new Vector3(0, 0.05f, 0);
+    }
+
+    void decreaseFlightTimer()
+    {
+       
+        flightTime--;
+
+        if(flightTime < 0)
+        {
+            flightTime = 0;
+        }
+
+        print(flightTime);
     }
 
     public void OnAim(InputValue value)
@@ -118,11 +159,18 @@ public class MovementComponent : MonoBehaviour
 
     }
 
+    public void OnDescend(InputValue value)
+    {
+        rigidbody.useGravity = true;
+        
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Ground") && !playerController.isJumping) return;
+        //if (!collision.gameObject.CompareTag("Ground") && !playerController.isJumping) return;
 
         playerController.isJumping = false; 
         playerAnimator.SetBool(isJumpingHash, false);
+        CancelInvoke(nameof(decreaseFlightTimer));
     }
 }

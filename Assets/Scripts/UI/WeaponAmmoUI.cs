@@ -9,9 +9,11 @@ public class WeaponAmmoUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI weaponNameText;
     [SerializeField] TextMeshProUGUI currentAmmoText;
     [SerializeField] TextMeshProUGUI reserveAmmoText;
+    [SerializeField] TextMeshProUGUI FlightTimeText;
 
 
     [SerializeField] WeaponComponent weaponComponent;
+    [SerializeField] MovementComponent movementComponent;
 
 
 
@@ -42,5 +44,6 @@ public class WeaponAmmoUI : MonoBehaviour
         weaponNameText.text = weaponComponent.weaponStats.weaponName;
         currentAmmoText.text = weaponComponent.weaponStats.bulletsInMag.ToString();
         reserveAmmoText.text = weaponComponent.weaponStats.reserveAmmo.ToString();
+        FlightTimeText.text = "Flight Time: " + movementComponent.flightTime.ToString();
     }
 }

@@ -30,6 +30,7 @@ public class MovementComponent : MonoBehaviour
     public readonly int movementYHash = Animator.StringToHash("MovementY");
     public readonly int isJumpingHash = Animator.StringToHash("IsJumping");
     public readonly int isRunningHash = Animator.StringToHash("IsRunning");
+    public readonly int aimVerticalHash = Animator.StringToHash("AimVertical");
 
 
     public GameObject FollowTarget;
@@ -40,6 +41,11 @@ public class MovementComponent : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
         flightTime = maxFlightTime;
+
+        if (!GameManager.instance.cursorActive)
+        {
+            AppEvents.InvokeMouseCursorEnable(false);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -148,6 +154,7 @@ public class MovementComponent : MonoBehaviour
     public void OnLook(InputValue value)
     {
         lookInput = value.Get<Vector2>();
+        //playerAnimator.SetFloat(aimVerticalHash, lookInput.y);
     }
 
 

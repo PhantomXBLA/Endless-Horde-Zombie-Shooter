@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public bool isRunning;
     public bool isAiming;
 
+    public InventoryComponent inventory;
+
     // Start is called before the first frame update
     void Start()
     {

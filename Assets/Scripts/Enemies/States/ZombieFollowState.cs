@@ -7,7 +7,7 @@ public class ZombieFollowState : ZombieStates
     GameObject followTarget;
     const float stoppingDistance = 1;
     int movementZHash = Animator.StringToHash("MovementZ");
-    public ZombieFollowState(GameObject _followTarget, ZombieComponent zombie, StateMachine stateMachine) : base(zombie, stateMachine)
+    public ZombieFollowState(GameObject _followTarget, ZombieComponent zombie, ZombieStateMachine stateMachine) : base(zombie, stateMachine)
     {
         followTarget = _followTarget;
         UpdateInterval = 2;

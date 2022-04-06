@@ -102,6 +102,7 @@ public class WeaponHolder : MonoBehaviour
 
     public void StartReloading()
     {
+        if (equippedWeapon.isReloading || equippedWeapon.weaponStats.bulletsInMag == equippedWeapon.weaponStats.magSize) return;
 
         if (playerController.isFiring)
         {

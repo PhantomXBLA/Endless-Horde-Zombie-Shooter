@@ -120,17 +120,17 @@ public class WeaponComponent : MonoBehaviour
         }
 
 
-        int bulletsToReload = weaponStats.magSize - weaponStats.reserveAmmo;
+        int bulletsToReload = weaponStats.reserveAmmo - (weaponStats.magSize - weaponStats.bulletsInMag);
 
-        if (bulletsToReload < 0)
+        if (bulletsToReload > 0)
         {
+            weaponStats.reserveAmmo = bulletsToReload;
             weaponStats.bulletsInMag = weaponStats.magSize;
-            weaponStats.reserveAmmo -= weaponStats.magSize;
 
         }
         else
         {
-            weaponStats.bulletsInMag = weaponStats.reserveAmmo;
+            weaponStats.bulletsInMag += weaponStats.reserveAmmo;
             weaponStats.reserveAmmo = 0;
         }
     }

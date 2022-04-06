@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class State
 {
-    protected StateMachine stateMachine;
+    protected ZombieStateMachine stateMachine;
 
     public float UpdateInterval { get; protected set; } = 1f;
 
-    protected State(StateMachine _stateMachine)
+    protected State(ZombieStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
     }

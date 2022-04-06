@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1283381775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1283381776}
+  m_Layer: 0
+  m_Name: FollowTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1283381776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283381775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.62, y: 1.32, z: 0.103}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7114963905891750186}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1742507665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742507666}
+  m_Layer: 0
+  m_Name: WeaponSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1742507666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742507665}
+  m_LocalRotation: {x: 0.004994971, y: -0.053905148, z: 0.1299676, w: 0.9900393}
+  m_LocalPosition: {x: 0.066, y: -0.018, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8971865688368072969}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 1.37, y: -6.054, z: 14.885}
 --- !u!1 &175795522111894949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,6 +1121,7 @@ Transform:
   - {fileID: 8481926944455179945}
   - {fileID: 1998369228312613325}
   - {fileID: 1156798041395831359}
+  - {fileID: 1742507666}
   m_Father: {fileID: 5090345682946638697}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1881,12 +1942,14 @@ GameObject:
   - component: {fileID: 3773243725629262672}
   - component: {fileID: 793849657276507703}
   - component: {fileID: 1245406076317509664}
+  - component: {fileID: 3299577905274717508}
   - component: {fileID: 3772989516783492553}
   - component: {fileID: 2724357680098103491}
   - component: {fileID: 8271145026346658205}
+  - component: {fileID: 87594528}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1904,6 +1967,7 @@ Transform:
   m_Children:
   - {fileID: 8434193684653208349}
   - {fileID: 3381428394031395262}
+  - {fileID: 1283381776}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1970,6 +2034,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3299577905274717508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7635498392412949392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e4f70c83ab2a344ae9f55cd35f50e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 25
+  maxHealth: 25
 --- !u!114 &3772989516783492553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1985,6 +2063,10 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 10
   jumpForce: 5
+  maxFlightTime: 8
+  flightTime: 0
+  aimSensitivity: 0.5
+  FollowTarget: {fileID: 1283381775}
 --- !u!114 &2724357680098103491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2001,6 +2083,7 @@ MonoBehaviour:
   isReloading: 0
   isJumping: 0
   isRunning: 0
+  isAiming: 0
 --- !u!54 &8271145026346658205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2017,6 +2100,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &87594528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7635498392412949392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4fdd84e27ca3a459d8dbb69180f076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponToSpawn: {fileID: 5587314598721099594, guid: bf6bfae7dab663546ae58c4ff7b0e149, type: 3}
+  playerController: {fileID: 0}
+  WeaponSocket: {fileID: 1742507665}
+  GripSocket: {fileID: 0}
 --- !u!1 &7652411916647065803
 GameObject:
   m_ObjectHideFlags: 0

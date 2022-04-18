@@ -3423,6 +3423,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 150
   maxHealth: 150
+  FlightRestore: {fileID: 5844919888879400018, guid: 016006c0723aead4b952192fd3b72cb2, type: 3}
+  UnibeamPower: {fileID: 6862586590624100527, guid: 2f91709494af0804d957a91c34359363, type: 3}
 --- !u!114 &643638745
 MonoBehaviour:
   m_ObjectHideFlags: 0

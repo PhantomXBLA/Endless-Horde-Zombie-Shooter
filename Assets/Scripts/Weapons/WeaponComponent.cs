@@ -44,6 +44,19 @@ public class WeaponComponent : MonoBehaviour
 
     protected Camera mainCamera;
 
+    [SerializeField]
+    protected AudioSource firingSound;
+    protected bool fireSoundCanPlay = true;
+
+    [SerializeField]
+    protected AudioSource reloadSound;
+    [SerializeField]
+    protected AudioSource jarvisReload;
+
+    public LineRenderer lineRendererR;
+    public LineRenderer lineRendererL;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +90,7 @@ public class WeaponComponent : MonoBehaviour
         else
         {
             Fire();
+
         }
     }
 
@@ -85,9 +99,13 @@ public class WeaponComponent : MonoBehaviour
         isFiring = false;
         CancelInvoke(nameof(Fire));
 
+        firingSound.Stop();
+        fireSoundCanPlay = true;
+
         if (firingEffect.isPlaying)
         {
             firingEffect.Stop();
+
         }
     }
 
@@ -112,7 +130,18 @@ public class WeaponComponent : MonoBehaviour
 
     protected virtual void ReloadWeapon()
     {
+        reloadSound.Play();
 
+        int jarvisVoicelineChance = 1;
+
+        int jarvisVoicelineRoll = Random.Range(1, 10);
+
+        if(jarvisVoicelineChance == jarvisVoicelineRoll)
+        {
+            jarvisReload.Play();
+        }
+
+       
 
         if (firingEffect.isPlaying)
         {

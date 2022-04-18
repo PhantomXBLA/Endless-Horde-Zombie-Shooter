@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class HealthComponent : MonoBehaviour, IDamagable
 {
     [SerializeField]
@@ -34,6 +35,7 @@ public class HealthComponent : MonoBehaviour, IDamagable
 
         if(currentHealth <= 0)
         {
+
             Destroy();
         }
     }

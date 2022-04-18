@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MovementComponent : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class MovementComponent : MonoBehaviour
 
     public float maxFlightTime = 8;
     public float flightTime;
+
+    public AudioSource flightSound;
+    public AudioSource flightRestored;
 
     private PlayerController playerController;
 
@@ -81,7 +85,7 @@ public class MovementComponent : MonoBehaviour
         FollowTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
 
 
-       // if (playerController.isJumping) return;
+        //if (playerController.isJumping && flightTime <= 0) return;
 
         if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
 
@@ -94,6 +98,7 @@ public class MovementComponent : MonoBehaviour
         if(flightTime <= 0 && playerController.isJumping == true)
         {
             rigidbody.useGravity = true;
+            flightSound.Stop();
         }
 
 
@@ -108,17 +113,26 @@ public class MovementComponent : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        playerController.isJumping = true;
-        //rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
-        rigidbody.useGravity = false;
+        
+        if(flightTime <= 0 && playerController.isJumping == false)
+        {
+            rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
+            playerController.isJumping = true;
+        }
+ 
+        
 
         if (value.isPressed && flightTime > 0)
         {
+            playerController.isJumping = true;
+            flightSound.Play();
+            rigidbody.useGravity = false;
             InvokeRepeating(nameof(FlyUP), 0.1f, 0.01f);
             InvokeRepeating(nameof(decreaseFlightTimer), 0.25f, 1);
         }
         else
         {
+            
             CancelInvoke(nameof(FlyUP));
         }
 
@@ -169,7 +183,16 @@ public class MovementComponent : MonoBehaviour
     public void OnDescend(InputValue value)
     {
         rigidbody.useGravity = true;
-        
+        flightSound.Stop();
+
+    }
+
+    public void OnFireUnibeam()
+    {
+        if(playerController.unibeamCharge >= 4)
+        {
+            SceneManager.LoadScene("WinScene");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

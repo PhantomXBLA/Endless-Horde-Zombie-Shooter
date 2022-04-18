@@ -37,6 +37,8 @@ public class ZombieAttackState : ZombieStates
         base.IntervalUpdate();
         
         damagableObject?.TakeDamage(ownerZombie.zombieDamage);
+
+        
     }
 
     // Update is called once per frame

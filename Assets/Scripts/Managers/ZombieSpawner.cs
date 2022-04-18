@@ -21,7 +21,7 @@ public class ZombieSpawner : MonoBehaviour
     }
 
 
-    void SpawnZombie()
+    public void SpawnZombie()
     {
         GameObject zombieToSpawn = zombiePrefabs[Random.Range(0, zombiePrefabs.Length)];
         SpawnerVolume spawnVolume = spawnVolumes[Random.Range(0, spawnVolumes.Length)];

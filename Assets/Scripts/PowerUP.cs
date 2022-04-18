@@ -8,7 +8,7 @@ public class PowerUP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerMovementComponent = GameObject.Find("Player").GetComponent<MovementComponent>();
     }
 
     // Update is called once per frame
@@ -22,6 +22,7 @@ public class PowerUP : MonoBehaviour
         if(collision.gameObject.name == "Player")
         {
             playerMovementComponent.flightTime = playerMovementComponent.maxFlightTime;
+            playerMovementComponent.flightRestored.Play();
             Destroy(this.gameObject);
         }
     }

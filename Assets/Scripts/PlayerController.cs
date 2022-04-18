@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
 
     public InventoryComponent inventory;
 
+    public int unibeamCharge = 0;
+
+    public List<AudioSource> UnibeamSounds = new List<AudioSource>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +27,25 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void IncrementUnibeam(int amount)
+    {
+        unibeamCharge += amount;
+
+        switch (unibeamCharge)
+        {
+            case 1:
+                UnibeamSounds[0].Play();
+                break;
+
+            case 2:
+                UnibeamSounds[1].Play();
+                break;
+
+            case 4:
+                UnibeamSounds[2].Play();
+                break;
+        }
     }
 }

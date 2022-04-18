@@ -17,6 +17,12 @@ public class WeaponHolder : MonoBehaviour
     GameObject WeaponSocket;
 
     [SerializeField]
+    GameObject IMHandSocketL;
+
+    [SerializeField]
+    GameObject IMHandSocketR;
+
+    [SerializeField]
     Transform GripSocket;
 
     Animator animator;
@@ -48,7 +54,16 @@ public class WeaponHolder : MonoBehaviour
     private void OnAnimatorIK(int layerIndex)
     {
         animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
-        animator.SetIKPosition(AvatarIKGoal.LeftHand, GripSocket.transform.position);
+        animator.SetIKPosition(AvatarIKGoal.LeftHand, IMHandSocketL.transform.position);
+        animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
+        animator.SetIKRotation(AvatarIKGoal.LeftHand, IMHandSocketL.transform.rotation);
+
+        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+        animator.SetIKPosition(AvatarIKGoal.RightHand, new Vector3(IMHandSocketR.transform.position.x, IMHandSocketR.transform.position.y, IMHandSocketR.transform.position.z));
+        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+        animator.SetIKRotation(AvatarIKGoal.RightHand, IMHandSocketR.transform.rotation);
+
+        
     }
 
     public void OnFire(InputValue value)
@@ -88,6 +103,8 @@ public class WeaponHolder : MonoBehaviour
         animator.SetBool(isFiringHash, false);
         equippedWeapon.StopFiring();
 
+        equippedWeapon.lineRendererL.enabled = false;
+        equippedWeapon.lineRendererR.enabled = false;
 
 
 
